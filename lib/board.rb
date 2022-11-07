@@ -23,7 +23,72 @@ class Board
     false
   end
 
-  
+  def check_winner_columns
+    Array((0..6)).each do | column |
+      count = 0
+      Array((0..5)).each do | row |
+        if row > 0 && board[row][column] == board[row - 1][column] && !board[row][column].nil?
+          count += 1
+        else
+          count = 0
+        end 
+      end
+      return true if count >= 3
+    end
+    false
+  end
+
+  def check_winner_left_to_right_diagonals
+    [[2,0],[1,0],[0,0],[0,1],[0,2],[0,3]].map do | initial |
+      row = initial[0]
+      column = initial[1]
+      count = 0
+      first = true
+      while row <= 5 && column <= 6
+        if first
+          first = false
+          row += 1
+          column += 1
+          next
+        end
+        if board[row][column] == board[row - 1][column - 1] && !board[row][column].nil?
+          count += 1
+        else
+          count = 0
+        end 
+        return true if count >= 3
+        row += 1
+        column += 1
+      end 
+    end
+    false
+  end
+
+  def check_winner_right_to_left_diagonals
+    [[2,6],[1,6],[0,6],[0,5],[0,4],[0,3]].map do | initial |
+      row = initial[0]
+      column = initial[1]
+      count = 0
+      first = true
+      while row <= 5 && column <= 6
+        if first
+          first = false
+          row += 1
+          column -= 1
+          next
+        end
+        if board[row][column] == board[row - 1][column + 1] && !board[row][column].nil?
+          count += 1
+        else
+          count = 0
+        end 
+        return true if count >= 3
+        row += 1
+        column -= 1
+      end 
+    end
+    false
+  end
 
 end
 
