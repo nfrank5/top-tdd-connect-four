@@ -42,4 +42,33 @@ describe Game do
       end
     end
   end
+
+  describe '#player_disc_input' do
+    subject(:game_player_disc_input) {  described_class.new }
+
+    context 'when the disc is inside the board parameters' do
+      before do
+        allow(game_player_disc_input).to receive(:gets).and_return('3')
+      end
+      it 'it returns the column and breaks the loop' do
+        expect(game_player_disc_input.player_disc_input).to eq('3')
+      end
+    end
+
+    context 'when the disc is outside the board parameters' do
+      before do
+        allow(game_player_disc_input).to receive(:gets).and_return('21', '3')
+      end
+      it 'it displays error message and then returns the column and breaks the loop' do
+        message = 'Please enter a single digit for the column.'
+        expect(game_player_disc_input).to receive(:puts).once
+        expect(game_player_disc_input).to receive(:puts).with(message).once
+        expect(game_player_disc_input.player_disc_input).to eq('3')
+      end
+    end
+  end
+
+
+
+
 end
