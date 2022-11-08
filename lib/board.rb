@@ -102,5 +102,12 @@ class Board
     end
     false
   end
+
+  def print_board
+    puts "\n | 1 | 2 | 3 | 4 | 5 | 6 | 7 |\n\t"
+    board.each do |row|
+      puts " | #{!row[0].nil? ? row[0] : ' ' } | #{!row[1].nil? ? row[1] : ' ' } | #{!row[2].nil? ? row[2] : ' ' } | #{!row[3].nil? ? row[3] : ' ' } | #{!row[4].nil? ? row[4] : ' ' } | #{!row[5].nil? ? row[5] : ' ' } | #{!row[6].nil? ? row[6] : ' ' } |"
+    end
+  end
 end
 
