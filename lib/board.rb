@@ -83,12 +83,24 @@ class Board
           count = 0
         end 
         return true if count >= 3
+
         row += 1
         column -= 1
-      end 
+      end
     end
     false
   end
 
+  def update_space(column, value)
+    if column.between?(0, 6) && board[0][column].nil?
+      (0..5).each do |row|
+        if row + 1 == 6 || !board[row + 1][column].nil? 
+          board[row][column] = value
+          return true
+        end
+      end
+    end
+    false
+  end
 end
 

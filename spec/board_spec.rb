@@ -9,7 +9,7 @@ describe Board do
                 [nil, nil, nil, nil, nil, nil, nil],
                 [nil, nil, nil, 'O', 'O', 'O', 'O'],
                 [nil, nil, nil, nil, nil, nil, nil]]
-      subject(:board_check_winner_rows) { Board.new(board) }
+      subject(:board_check_winner_rows) { described_class.new(board) }
       it 'returns true' do
         expect(board_check_winner_rows.check_winner_rows).to be true
       end
@@ -21,7 +21,7 @@ describe Board do
                 [nil, nil, nil, nil, nil, nil, nil],
                 ['O', 'O', 'O', nil, 'O', 'O', 'O'],
                 [nil, nil, nil, nil, nil, nil, nil]]
-      subject(:board_check_winner_rows) { Board.new(board) }
+      subject(:board_check_winner_rows) { described_class.new(board) }
       it 'returns false' do
         expect(board_check_winner_rows.check_winner_rows).to be false
       end
@@ -34,7 +34,7 @@ describe Board do
                 [nil, nil, nil, nil, nil, nil, nil],
                 [nil, nil, nil, nil, nil, nil, nil],
                 [nil, nil, nil, nil, nil, nil, nil]]
-      subject(:board_check_winner_rows) { Board.new(board) }
+      subject(:board_check_winner_rows) { described_class.new(board) }
       it 'returns false' do
         expect(board_check_winner_rows.check_winner_rows).to be false
       end
@@ -49,7 +49,7 @@ describe Board do
                 ['O', nil, nil, nil, nil, nil, nil],
                 ['O', nil, nil, nil, nil, nil, nil],
                 ['O', nil, nil, nil, nil, nil, nil]]
-      subject(:board_check_winner_columns) { Board.new(board) }
+      subject(:board_check_winner_columns) { described_class.new(board) }
       it 'returns true' do
         expect(board_check_winner_columns.check_winner_columns).to be true
       end
@@ -62,7 +62,7 @@ describe Board do
                 [nil, nil, 'O', nil, nil, nil, nil],
                 [nil, nil, 'O', nil, nil, nil, nil],
                 [nil, nil, 'O', nil, nil, nil, nil]]
-      subject(:board_check_winner_columns) { Board.new(board) }
+      subject(:board_check_winner_columns) { described_class.new(board) }
       it 'returns false' do
         expect(board_check_winner_columns.check_winner_columns).to be false
       end
@@ -75,7 +75,7 @@ describe Board do
                 [nil, nil, nil, nil, nil, nil, nil],
                 [nil, nil, nil, nil, nil, nil, nil],
                 [nil, nil, nil, nil, nil, nil, nil]]
-        subject(:board_check_winner_columns) { Board.new(board) }
+        subject(:board_check_winner_columns) { described_class.new(board) }
         it 'returns false' do
         expect(board_check_winner_columns.check_winner_columns).to be false
       end
@@ -90,7 +90,7 @@ describe Board do
                 [nil, nil, nil, 'O', nil, nil, nil],
                 [nil, nil, nil, nil, nil, nil, nil],
                 [nil, nil, nil, nil, nil, nil, nil]]
-      subject(:board_check_winner_diagonals) { Board.new(board) }
+      subject(:board_check_winner_diagonals) { described_class.new(board) }
       it 'returns true' do
         expect(board_check_winner_diagonals.check_winner_left_to_right_diagonals).to be true
       end
@@ -103,7 +103,7 @@ describe Board do
                 [nil, nil, nil, nil, nil, nil, nil],
                 [nil, nil, nil, nil, 'O', nil, nil],
                 [nil, nil, nil, nil, nil, 'O', nil]]
-      subject(:board_check_winner_diagonals) { Board.new(board) }
+      subject(:board_check_winner_diagonals) { described_class.new(board) }
       it 'returns false' do
         expect(board_check_winner_diagonals.check_winner_left_to_right_diagonals).to be false
       end
@@ -116,7 +116,7 @@ describe Board do
                 [nil, nil, nil, nil, nil, nil, nil],
                 [nil, nil, nil, nil, nil, nil, nil],
                 [nil, nil, nil, nil, nil, nil, nil]]
-      subject(:board_check_winner_diagonals) { Board.new(board) }
+      subject(:board_check_winner_diagonals) { described_class.new(board) }
       it 'returns false' do
         expect(board_check_winner_diagonals.check_winner_left_to_right_diagonals).to be false
       end
@@ -130,7 +130,7 @@ describe Board do
                   [nil, nil, 'O', nil, nil, nil, nil],
                   [nil, 'O', nil, nil, nil, nil, nil],
                   [nil, nil, nil, nil, nil, nil, nil]]
-        subject(:board_check_winner_diagonals) { Board.new(board) }
+        subject(:board_check_winner_diagonals) { described_class.new(board) }
         it 'returns true' do
           expect(board_check_winner_diagonals.check_winner_right_to_left_diagonals).to be true
         end
@@ -143,7 +143,7 @@ describe Board do
                   [nil, nil, 'O', nil, nil, nil, nil],
                   [nil, 'O', nil, nil, nil, nil, nil],
                   ['O', nil, nil, nil, nil, nil, nil]]
-        subject(:board_check_winner_diagonals) { Board.new(board) }
+        subject(:board_check_winner_diagonals) { described_class.new(board) }
         it 'returns false' do
           expect(board_check_winner_diagonals.check_winner_right_to_left_diagonals).to be false
         end
@@ -156,15 +156,46 @@ describe Board do
                   [nil, nil, nil, nil, nil, nil, nil],
                   [nil, nil, nil, nil, nil, nil, nil],
                   [nil, nil, nil, nil, nil, nil, nil]]
-        subject(:board_check_winner_diagonals) { Board.new(board) }
+        subject(:board_check_winner_diagonals) { described_class.new(board) }
         it 'returns true' do
           expect(board_check_winner_diagonals.check_winner_right_to_left_diagonals).to be false
         end
       end
     end
-
-
   end
+
+  describe "#update_space" do
+    context 'when the the first column is empty and you add a disc' do
+      board = [ [nil, nil, nil, nil, nil, nil, nil],
+                [nil, nil, nil, nil, nil, nil, nil],
+                [nil, nil, nil, nil, nil, nil, nil],
+                [nil, nil, nil, nil, nil, nil, nil],
+                [nil, nil, nil, nil, nil, nil, nil],
+                [nil, nil, nil, nil, nil, nil, nil]]
+      subject(:board_update_space) { described_class.new(board) }
+      it 'adds a disc to the bottom row of the first column' do
+        board_update_space.update_space(0, 'O')
+        expect(board_update_space.board[5][0]).to eq('O')
+      end
+    end
+
+    context 'when the the third column has two discs and you add a disc' do
+      board = [ [nil, nil, nil, nil, nil, nil, nil],
+                [nil, nil, nil, nil, nil, nil, nil],
+                [nil, nil, nil, nil, nil, nil, nil],
+                [nil, nil, nil, nil, nil, nil, nil],
+                [nil, nil, 'O', nil, nil, nil, nil],
+                [nil, nil, 'O', nil, nil, nil, nil]]
+      subject(:board_update_space) { described_class.new(board) }
+      it 'adds a circle to the third row of the third column' do
+        board_update_space.update_space(2, 'O')
+        expect(board_update_space.board[3][2]).to eq('O')
+      end
+    end
+  end
+
+
+ 
 end
 
 
