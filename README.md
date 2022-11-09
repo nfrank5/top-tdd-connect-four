@@ -9,3 +9,5 @@ The major difference here is that you’ll be doing this TDD-style. So figure ou
 Only write exactly enough code to make your test pass. Oftentimes, you’ll end up having to write two tests in order to make a method do anything useful. That’s okay here. It may feel a bit like overkill, but that’s the point of the exercise. Your thoughts will probably be something like “Okay, I need to make this thing happen. How do I test it? Okay, wrote the test, how do I code it into Ruby? Okay, wrote the Ruby, how can I make this better?” You’ll find yourself spending a fair bit of time Googling and trying to figure out exactly how to test a particular bit of functionality. That’s also okay… You’re really learning RSpec here, not Ruby, and it takes some getting used to.
 
 https://www.theodinproject.com/lessons/ruby-connect-four
+
+[![Run on Repl.it](https://replit.com/badge/github/nfrank5/top-tdd-connect-four)](https://replit.com/new/github/nfrank5/top-tdd-connect-four)
