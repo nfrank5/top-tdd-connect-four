@@ -10,4 +10,5 @@ Only write exactly enough code to make your test pass. Oftentimes, you’ll end 
 
 https://www.theodinproject.com/lessons/ruby-connect-four
 
-[![Run on Repl.it](https://replit.com/badge/github/nfrank5/top-tdd-connect-four)](https://replit.com/new/github/nfrank5/top-tdd-connect-four)
+Live preview: 
+https://replit.com/@nfrank5/top-tdd-connect-four#main.rb
