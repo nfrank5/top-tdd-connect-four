@@ -1,24 +1,27 @@
 class Board
   ROWS = 6
   COLUMNS = 7
-  attr_reader :board
+  attr_accessor :board
 
   def initialize(board = Array.new(ROWS){Array.new(COLUMNS)} )
     @board = board
   end
 
+  def check_for_winner
+    check_winner_rows || check_winner_columns || check_winner_left_to_right_diagonals || check_winner_right_to_left_diagonals
+  end
+
   def check_winner_rows
-    board.each_with_index do | row, row_index |
+    board.each_with_index do |row, row_index|
       count = 0
-      row.each_with_index do | cell, cell_index |
-        if cell == board[row_index][cell_index - 1] && !cell.nil? && cell_index > 0
+      row.each_with_index do |cell, cell_index|
+        if cell_index.positive? && cell == board[row_index][cell_index - 1] && !cell.nil?
           count += 1
+          return true if count >= 3
         else
           count = 0
         end 
       end
-      return true if count >= 3
-
     end
     false
   end
@@ -29,11 +32,11 @@ class Board
       Array((0..5)).each do | row |
         if row > 0 && board[row][column] == board[row - 1][column] && !board[row][column].nil?
           count += 1
+          return true if count >= 3
         else
           count = 0
         end 
       end
-      return true if count >= 3
     end
     false
   end
@@ -53,10 +56,10 @@ class Board
         end
         if board[row][column] == board[row - 1][column - 1] && !board[row][column].nil?
           count += 1
+          return true if count >= 3
         else
           count = 0
         end 
-        return true if count >= 3
         row += 1
         column += 1
       end 
@@ -92,10 +95,10 @@ class Board
   end
 
   def update_space(column, value)
-    if column.between?(0, 6) && board[0][column].nil?
+    if column.between?(0, 6) && @board[0][column].nil?
       (0..5).each do |row|
-        if row + 1 == 6 || !board[row + 1][column].nil? 
-          board[row][column] = value
+        if row + 1 == 6 || !@board[row + 1][column].nil? 
+          @board[row][column] = value
           return true
         end
       end
@@ -104,10 +107,16 @@ class Board
   end
 
   def print_board
-    puts "\n | 1 | 2 | 3 | 4 | 5 | 6 | 7 |\n\t"
-    board.each do |row|
-      puts " | #{!row[0].nil? ? row[0] : ' ' } | #{!row[1].nil? ? row[1] : ' ' } | #{!row[2].nil? ? row[2] : ' ' } | #{!row[3].nil? ? row[3] : ' ' } | #{!row[4].nil? ? row[4] : ' ' } | #{!row[5].nil? ? row[5] : ' ' } | #{!row[6].nil? ? row[6] : ' ' } |"
+    
+    puts "\n | 1| 2| 3| 4| 5| 6| 7|\n\t"
+    @board.each do |row|
+      puts " |#{p_s(row[0])}|#{p_s(row[1])}|#{p_s(row[2])}|#{p_s(row[3])}|#{p_s(row[4])}|#{p_s(row[5])}|#{p_s(row[6])}|"
     end
+    puts "\n\t"
+  end
+
+  def p_s(space)
+    !space.nil? ? space.to_s : '  '
   end
 end
 

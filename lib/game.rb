@@ -1,22 +1,60 @@
 require_relative '../lib/board'
 
 class Game
-  attr_reader :current_board
+  attr_reader :current_board, :current_player, :player_one_name, :player_two_name
 
   def initialize(board = Board.new)
     @current_board = board
-    @player_one = ''
-    @player_two = ''
-    @current_player = { name: @player_one, mark: 'X' }
+    @player_one_name = ''
+    @player_two_name = ''
+    @current_player = ''
   end
 
   def play
     introduction
-    @player_one = get_players('Insert name of player one')
-    @player_two = get_players('Insert name of player two')
-    @current_player = { name: @player_one, mark: 'X' }
+    @player_one_name = get_players('Insert name of player one')
+    @player_two_name = get_players('Insert name of player two')
+    @current_player = { name: player_one_name, disc: "\u26BD" }
     placing_discs
     ending
+  end
+
+  def placing_discs
+    clear_screen
+    current_board.print_board  
+    42.times do
+      puts "#{player_one_name}: is \u26BD and #{player_two_name} is: \u26D4"
+      column_update_verification
+      break if current_board.check_for_winner
+      
+      clear_screen
+      @current_board.print_board 
+      @current_player = switch_turn
+    end
+  end
+
+  def column_update_verification
+    loop do
+      space = player_disc_input
+      unless @current_board.update_space(space, current_player[:disc])
+        clear_screen 
+        current_board.print_board
+        puts 'Please, select a free column'
+        next
+      end
+      break
+    end
+  end
+
+  def player_disc_input
+    puts "\nIt's #{current_player[:name]} turn"
+    loop do
+      space = gets.chomp
+      verified_space = space if space.match?(/^[1-7]$/) 
+      return verified_space.to_i - 1 if verified_space
+
+      puts 'Please enter a single digit between 1 and 7.'
+    end
   end
 
   def introduction
@@ -39,34 +77,30 @@ class Game
   def player_name_input
     loop do
       user_input = gets.chomp
-      verified_name = user_input if user_input.match?(/^.{3,10}$/) && @player_one != user_input
+      verified_name = user_input if user_input.match?(/^.{3,10}$/) && player_one_name != user_input
       return verified_name if verified_name
 
       puts 'Please enter a different name for each player (between 3 and 10 characters).'
     end
   end
 
-  def space_free_verification
-    loop do
-      verified_sapce = player_mark_input.split('')
-      unless current_board.update_space(verified_sapce[1].to_i - 1, verified_sapce[0].to_sym, @current_player[:mark])
-        clear_screen 
-        current_board.print_board
-        puts 'Mark a free space'
-        next
-      end
-      break
+  def switch_turn
+    if current_player[:name] == player_one_name
+      { name: player_two_name, disc: "\u26D4" }
+    else
+      { name: player_one_name, disc: "\u26BD" }
     end
   end
 
-  def player_disc_input
-    puts "It's #{@current_player[:name]} turn"
-    loop do
-      space = gets.chomp.downcase
-      verified_sapce = space if space.match?(/^[1-7]$/) 
-      return verified_sapce if verified_sapce
-
-      puts 'Please enter a single digit for the column.'
+  def ending
+    clear_screen
+    current_board.print_board
+    if current_board.check_for_winner
+      puts "#{@current_player[:name]} #{@current_player[:disc]} is the winner!!!"
+    else
+      clear_screen
+      current_board.print_board(true)
+      puts "It's a draw"
     end
   end
 
