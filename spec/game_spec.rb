@@ -140,9 +140,9 @@ describe Game do
         allow(game_placing_discs).to receive(:puts)
       end
 
-      xit 'breaks the loop if check_for_winner returns true' do
-        expect(game_placing_discs).to receive(:mark_if_space_free).once
-        game_placing_discs.placing_marks
+      it 'breaks the loop if check_for_winner returns true' do
+        expect(game_placing_discs).to receive(:column_update_verification).once
+        game_placing_discs.placing_discs
       end
 
     end
